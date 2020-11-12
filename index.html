@@ -14,11 +14,25 @@
         canvas.height = document.documentElement.clientHeight
         let ctx = canvas.getContext("2d");
         
-        let painting = false
-
         ctx.fillStyle = "black"
         ctx.StrokeStyle='none'
 
+        let painting = false
+       
+        let isTouchDevice = 'ontouchstart' in document.documentElement
+
+        if(isTouchDevice){
+            canvas.ontouchmove=(e)=>{
+                let X = e.touches[0].clientX
+                let Y = e.touches[0].clientY
+                ctx.beginPath ()
+                ctx.arc(X,Y,10,0,2*Math.PI)
+                ctx.fill ()
+                ctx.stroke();
+            }
+        } 
+        
+        else{
         canvas.onmousedown = () =>{
             painting=true
         }
@@ -31,9 +45,9 @@
             }
             else{ console.log()}
         }
-
+ 
         canvas.onmouseup = ()=>{ painting=false}
-
+          }
     </script>
 </body>
 </html>
