@@ -15,7 +15,16 @@
         let ctx = canvas.getContext("2d");
         
         ctx.fillStyle = "black"
-        ctx.StrokeStyle='none'
+        ctx.StrokeStyle ='none'
+        ctx.lineWidth = 8
+        ctx.lineCap='round'
+
+        function drawLine(x1,y1,x2,y2){
+            ctx.beginPath()
+            ctx.moveTo(x1,y1)
+            ctx.lineTo(x2,y2)
+            ctx.stroke()
+        }   
 
         let painting = false
        
@@ -29,19 +38,24 @@
                 ctx.arc(X,Y,10,0,2*Math.PI)
                 ctx.fill ()
                 ctx.stroke();
+
             }
         } 
         
         else{
-        canvas.onmousedown = () =>{
+        canvas.onmousedown = (e) =>{
             painting=true
+            last = [e.clientX,e.clientY]
         }
         canvas.onmousemove =(e)=>{
             if(painting === true){
-                ctx.beginPath ()
-                ctx.arc(e.clientX,e.clientY,10,0,2*Math.PI)
-                ctx.fill ()
-                ctx.stroke();
+                console.last=last
+                drawLine(last[0],last[1],e.clientX,e.clientY)
+                last = [e.clientX, e.clientY]
+                // ctx.beginPath ()
+                // ctx.arc(e.clientX,e.clientY,10,0,2*Math.PI)
+                // ctx.fill ()
+                // ctx.stroke();
             }
             else{ console.log()}
         }
